@@ -9,19 +9,23 @@ import br.com.caelum.livraria.modelo.Autor;
 @Stateless
 public class AutorDao {
 
-	@Inject
-	private Banco banco;
+	@PersistenceContext
+	private EntityManager em;
 
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void salva(Autor autor) {
-		banco.save(autor);
+		this.em.persist(autor);
 	}
 	
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public List<Autor> todosAutores() {
-		return banco.listaAutores();
+		return this.em.createQuery("select a from Autor a", Autor.class)
+	            .getResultList();
 	}
-
+	
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public Autor buscaPelaId(Integer autorId) {
-		Autor autor = this.banco.buscaPelaId(autorId);
+		Autor autor = this.em.find(Autor.class, autorId);
 		return autor;
 	}
 	

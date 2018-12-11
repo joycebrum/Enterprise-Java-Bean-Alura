@@ -9,17 +9,19 @@ import br.com.caelum.livraria.bean.MenuBean;
 import br.com.caelum.livraria.dao.UsuarioDao;
 import br.com.caelum.livraria.modelo.Usuario;
 
-@Model
+@Named
+@RequestScoped
 public class LoginBean {
 	
 	private Usuario usuario = new Usuario();
-	private UsuarioDao dao = new UsuarioDao();
 	
 	@Inject
-	UsuarioLogadoBean usuarioLogado;
+	private UsuarioDao dao;
 	
-	@Inject
-	MenuBean menu;
+	
+	private UsuarioLogadoBean usuarioLogado = new UsuarioLogadoBean();
+	
+	private MenuBean menu = new MenuBean();
 
 	public Usuario getUsuario() {
 		return usuario;
